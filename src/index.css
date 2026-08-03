@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -11,7 +12,7 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
+  --inter: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
   --sans: "Raleway", system-ui, "Segoe UI", Roboto, sans-serif;
   --heading: "Raleway", system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
@@ -67,11 +68,13 @@ body {
   margin: 0;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+@layer base {
+  h1,
+  h2 {
+    font-family: var(--heading);
+    font-weight: 500;
+    color: var(--text-h);
+  }
 }
 
 h1 {
