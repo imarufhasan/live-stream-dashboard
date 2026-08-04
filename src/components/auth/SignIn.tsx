@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Eye, EyeOff, ArrowRight } from "lucide-react";
 
 export default function SignIn() {
@@ -7,10 +7,11 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: hook up your auth logic here
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
     console.log({ email, password });
+    navigate("/dashboard");
   };
 
   return (
