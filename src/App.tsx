@@ -4,7 +4,6 @@ import ForgotPassword from "./components/auth/Forgotpassword";
 import VerifyEmail from "./components/auth/Verifyemail";
 import ResetPassword from "./components/auth/Resetpassword";
 import AppRoutes from "./routes/AppRoutes";
-// import "./App.css";
 
 function App() {
   return (
@@ -15,7 +14,6 @@ function App() {
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
-      {/* Dashboard Home */}
       <Route path="/*" element={<AppRoutes />} />
     </Routes>
   );

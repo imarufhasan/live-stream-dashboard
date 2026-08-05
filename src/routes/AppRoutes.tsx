@@ -4,13 +4,13 @@ import DashboardLayout from "../layout/DashboardLayout";
 
 import Dashboard from "../pages/Dashboard";
 import UserList from "../pages/users/UserList";
-import SellerApprovals from "../pages/SellerApprovals";
 import Transactions from "../pages/Transactions";
 import RaffleManagement from "../pages/RaffleManagement";
-import AddCategory from "../pages/AddCategory";
-import Adminn from "../pages/Adminn";
+import CategoryPage from "../pages/CategoryPage";
+import AdminManagement from "../pages/AdminManagement";
 import Settings from "../pages/Settings";
 import SellerList from "../pages/users/SellerList";
+import SellerApprovals from "../pages/SellerApprovals";
 
 export default function AppRoutes() {
   return (
@@ -29,9 +29,9 @@ export default function AppRoutes() {
 
         <Route path="raffle" element={<RaffleManagement />} />
 
-        <Route path="category" element={<AddCategory />} />
+        <Route path="category" element={<CategoryPage />} />
 
-        <Route path="admin" element={<Adminn />} />
+        <Route path="admin" element={<AdminManagement />} />
 
         <Route path="settings" element={<Settings />} />
       </Route>
