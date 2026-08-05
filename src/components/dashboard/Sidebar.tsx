@@ -83,12 +83,16 @@ const menu: MenuItem[] = [
     icon: Settings,
     children: [
       {
-        name: "General",
-        path: "/dashboard/settings/general",
+        name: "Privacy Policy",
+        path: "/dashboard/settings/privacy-policy",
       },
       {
-        name: "Security",
-        path: "/dashboard/settings/security",
+        name: "Terms & Condition",
+        path: "/dashboard/settings/terms-condition",
+      },
+      {
+        name: "Support",
+        path: "/dashboard/settings/support",
       },
     ],
   },

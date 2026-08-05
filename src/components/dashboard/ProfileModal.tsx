@@ -1,8 +1,12 @@
 interface ProfileModalProps {
+  onOpenProfile: () => void;
   onLogout: () => void;
 }
 
-export default function ProfileModal({ onLogout }: ProfileModalProps) {
+export default function ProfileModal({
+  onOpenProfile,
+  onLogout,
+}: ProfileModalProps) {
   return (
     <div
       className="
@@ -26,6 +30,7 @@ export default function ProfileModal({ onLogout }: ProfileModalProps) {
       <hr className="my-3 border-[#333]" />
 
       <button
+        onClick={onOpenProfile}
         className="
           w-full
           text-left

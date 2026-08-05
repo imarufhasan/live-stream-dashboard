@@ -11,6 +11,9 @@ import AdminManagement from "../pages/AdminManagement";
 import Settings from "../pages/Settings";
 import SellerList from "../pages/users/SellerList";
 import SellerApprovals from "../pages/SellerApprovals";
+import PrivacyPolicy from "../pages/settings/PrivacyPolicy";
+import TermsConditions from "../pages/settings/TermsConditions";
+import ContactSupport from "../pages/settings/ContactSupport";
 
 export default function AppRoutes() {
   return (
@@ -21,7 +24,7 @@ export default function AppRoutes() {
         <Route path="users" element={<UserList />} />
 
         {/* Future */}
-        <Route path="/dashboard/sellers" element={<SellerList />} />
+        <Route path="sellers" element={<SellerList />} />
 
         <Route path="seller-approvals" element={<SellerApprovals />} />
 
@@ -34,6 +37,9 @@ export default function AppRoutes() {
         <Route path="admin" element={<AdminManagement />} />
 
         <Route path="settings" element={<Settings />} />
+        <Route path="settings/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="settings/terms-condition" element={<TermsConditions />} />
+        <Route path="settings/support" element={<ContactSupport />} />
       </Route>
     </Routes>
   );
