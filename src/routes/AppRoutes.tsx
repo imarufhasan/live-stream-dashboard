@@ -1,90 +1,40 @@
 import { Routes, Route } from "react-router-dom";
 
+import DashboardLayout from "../layout/DashboardLayout";
 
 import Dashboard from "../pages/Dashboard";
-import UserManagement from "../pages/UserManagement";
-import DashboardLayout from "../components/layout/DashboardLayout";
+import UserList from "../pages/users/UserList";
 import SellerApprovals from "../pages/SellerApprovals";
+import Transactions from "../pages/Transactions";
 import RaffleManagement from "../pages/RaffleManagement";
 import AddCategory from "../pages/AddCategory";
 import Adminn from "../pages/Adminn";
 import Settings from "../pages/Settings";
-import Transactions from "../pages/Transactions";
+import SellerList from "../pages/users/SellerList";
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route
-        path="/dashboard"
-        element={
-          <DashboardLayout>
-            <Dashboard />
-          </DashboardLayout>
-        }
-      />
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<Dashboard />} />
 
-      <Route
-        path="/dashboard/users"
-        element={
-          <DashboardLayout>
-            <UserManagement />
-          </DashboardLayout>
-        }
-      />
+        <Route path="users" element={<UserList />} />
 
-      <Route
-        path="/dashboard/sellers"
-        element={
-          <DashboardLayout>
-            <SellerApprovals />
-          </DashboardLayout>
-        }
-      />
+        {/* Future */}
+        <Route path="/dashboard/sellers" element={<SellerList />} />
 
-      <Route
-        path="/dashboard/transactions"
-        element={
-          <DashboardLayout>
-            <Transactions />
-          </DashboardLayout>
-        }
-      />
+        <Route path="seller-approvals" element={<SellerApprovals />} />
 
-      <Route
-        path="/dashboard/raffle"
-        element={
-          <DashboardLayout>
-            <RaffleManagement />
-          </DashboardLayout>
-        }
-      />
+        <Route path="transactions" element={<Transactions />} />
 
-      <Route
-        path="/dashboard/category"
-        element={
-          <DashboardLayout>
-            <AddCategory />
-          </DashboardLayout>
-        }
-      />
+        <Route path="raffle" element={<RaffleManagement />} />
 
-      <Route
-        path="/dashboard/admin"
-        element={
-          <DashboardLayout>
-            <Adminn />
-          </DashboardLayout>
-        }
-      />
+        <Route path="category" element={<AddCategory />} />
 
-      <Route
-        path="/dashboard/settings"
-        element={
-          <DashboardLayout>
-            <Settings />
-          </DashboardLayout>
-        }
-      />
+        <Route path="admin" element={<Adminn />} />
+
+        <Route path="settings" element={<Settings />} />
+      </Route>
     </Routes>
   );
 }

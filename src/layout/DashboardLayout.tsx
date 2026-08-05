@@ -1,12 +1,9 @@
-import Sidebar from "../dashboard/Sidebar";
-import Header from "../dashboard/Header";
+import Sidebar from "../components/dashboard/Sidebar";
+import Header from "../components/dashboard/Header";
 import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardLayout() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -18,9 +15,11 @@ export default function DashboardLayout({
       <Sidebar />
 
       <div className="flex-1">
-         <Header onLogout={handleLogout} />
+        <Header onLogout={handleLogout} />
 
-        <main className="p-6">{children}</main>
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
