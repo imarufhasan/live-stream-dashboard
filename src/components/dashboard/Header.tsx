@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 
 import ProfileModal from "./ProfileModal";
 import LogoutModal from "./LogoutModal";
@@ -11,9 +11,10 @@ import type { AdminProfile } from "../../data/profile";
 
 interface HeaderProps {
   onLogout: () => void;
+  onMenuClick: () => void;
 }
 
-export default function Header({ onLogout }: HeaderProps) {
+export default function Header({ onLogout, onMenuClick }: HeaderProps) {
   const [profile, setProfile] = useState<AdminProfile>(dummyProfile);
 
   const [profileOpen, setProfileOpen] = useState(false);
@@ -29,7 +30,19 @@ export default function Header({ onLogout }: HeaderProps) {
 
   return (
     <>
-      <header className="relative flex h-15 items-center justify-end border-b border-[#252525] bg-[#151515] px-8">
+      <header className="relative flex h-15 items-center justify-between gap-3 border-b border-[#252525] bg-[#151515] px-4 sm:px-8">
+        {/* Hamburger, mobile only - opens the sidebar drawer */}
+        <button
+          onClick={onMenuClick}
+          className="rounded-lg p-1.5 text-[#999] hover:bg-[#1e1e1e] hover:text-white lg:hidden"
+          title="Open menu"
+        >
+          <Menu size={22} />
+        </button>
+
+        {/* Spacer keeps the profile control pinned right on all sizes */}
+        <div className="flex-1 lg:hidden" />
+
         <button
           onClick={() => {
             setProfileCardOpen(false);
@@ -37,7 +50,7 @@ export default function Header({ onLogout }: HeaderProps) {
           }}
           className="flex items-center gap-3"
         >
-          <span>{profile.firstName}</span>
+          <span className="hidden sm:inline">{profile.firstName}</span>
 
           <img
             src={profile.avatar}

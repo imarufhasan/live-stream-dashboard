@@ -14,6 +14,7 @@ import SellerApprovals from "../pages/SellerApprovals";
 import PrivacyPolicy from "../pages/settings/PrivacyPolicy";
 import TermsConditions from "../pages/settings/TermsConditions";
 import ContactSupport from "../pages/settings/ContactSupport";
+import ReportPage from "../pages/ReportPage";
 
 export default function AppRoutes() {
   return (
@@ -33,6 +34,7 @@ export default function AppRoutes() {
         <Route path="raffle" element={<RaffleManagement />} />
 
         <Route path="category" element={<CategoryPage />} />
+        <Route path="report" element={<ReportPage />} />
 
         <Route path="admin" element={<AdminManagement />} />
 
