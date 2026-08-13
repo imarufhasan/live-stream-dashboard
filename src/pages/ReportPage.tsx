@@ -450,7 +450,7 @@ export default function ReportPage() {
                 <div className="min-w-0">
                   <p className="text-xs text-gray-500">Reporter</p>
 
-                  <p className="mt-1 break-words text-sm text-gray-300">
+                  <p className="mt-1 wrap-break-word text-sm text-gray-300">
                     {report.reporter}
                   </p>
                 </div>
@@ -458,7 +458,7 @@ export default function ReportPage() {
                 <div className="min-w-0">
                   <p className="text-xs text-gray-500">Date &amp; Time</p>
 
-                  <p className="mt-1 break-words text-sm text-gray-300">
+                  <p className="mt-1 wrap-break-word text-sm text-gray-300">
                     {report.dateTime}
                   </p>
                 </div>
@@ -466,7 +466,7 @@ export default function ReportPage() {
                 <div className="min-w-0 sm:col-span-2">
                   <p className="text-xs text-gray-500">Report</p>
 
-                  <p className="mt-1 break-words text-sm text-gray-300">
+                  <p className="mt-1 wrap-break-word text-sm text-gray-300">
                     {report.title}
                   </p>
                 </div>

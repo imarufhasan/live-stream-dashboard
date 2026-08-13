@@ -414,7 +414,7 @@ export default function AdminManagement() {
                 >
                   <p
                     className="
-                      break-words
+                      wrap-break-word
                       text-sm
                       font-medium
                       text-white

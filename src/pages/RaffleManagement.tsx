@@ -208,7 +208,7 @@ export default function RaffleManagement() {
               gap-3
             "
           >
-            <h2 className="min-w-0 break-words text-lg font-bold sm:text-xl">
+            <h2 className="min-w-0 wrap-break-word text-lg font-bold sm:text-xl">
               {raffle.title}
             </h2>
 
@@ -666,7 +666,7 @@ export default function RaffleManagement() {
                   <div className="min-w-0">
                     <p className="text-xs text-gray-500">Winner</p>
 
-                    <p className="mt-1 break-words text-sm font-semibold text-white">
+                    <p className="mt-1 wrap-break-word text-sm font-semibold text-white">
                       {w.name}
                     </p>
                   </div>
@@ -708,7 +708,7 @@ export default function RaffleManagement() {
                       Prize
                     </span>
 
-                    <span className="break-words text-right text-sm text-gray-300">
+                    <span className="wrap-break-word text-right text-sm text-gray-300">
                       {w.prize}
                     </span>
                   </div>

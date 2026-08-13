@@ -1,3 +1,5 @@
+// src/components/dashboard/Header.tsx
+
 import { useState } from "react";
 import { ChevronDown, Menu } from "lucide-react";
 
@@ -6,6 +8,7 @@ import LogoutModal from "./LogoutModal";
 import ProfileCard from "./ProfileCard";
 import EditProfileModal from "./EditProfileModal";
 import ChangePasswordModal from "./ChangePasswordModal";
+
 import { dummyProfile } from "../../data/profile";
 import type { AdminProfile } from "../../data/profile";
 
@@ -25,13 +28,17 @@ export default function Header({ onLogout, onMenuClick }: HeaderProps) {
 
   const handleAvatarChange = (file: File) => {
     const url = URL.createObjectURL(file);
-    setProfile((prev) => ({ ...prev, avatar: url }));
+
+    setProfile((prev) => ({
+      ...prev,
+      avatar: url,
+    }));
   };
 
   return (
     <>
       <header className="relative flex h-15 items-center justify-between gap-3 border-b border-[#252525] bg-[#151515] px-4 sm:px-8">
-        {/* Hamburger, mobile only - opens the sidebar drawer */}
+        {/* Mobile menu button */}
         <button
           onClick={onMenuClick}
           className="rounded-lg p-1.5 text-[#999] hover:bg-[#1e1e1e] hover:text-white lg:hidden"
@@ -40,15 +47,13 @@ export default function Header({ onLogout, onMenuClick }: HeaderProps) {
           <Menu size={22} />
         </button>
 
-        {/* Spacer keeps the profile control pinned right on all sizes */}
-        <div className="flex-1 lg:hidden" />
-
+        {/* Profile button */}
         <button
           onClick={() => {
             setProfileCardOpen(false);
             setProfileOpen((prev) => !prev);
           }}
-          className="flex items-center gap-3"
+          className="ml-auto flex items-center gap-3"
         >
           <span className="hidden sm:inline">{profile.firstName}</span>
 
@@ -61,6 +66,7 @@ export default function Header({ onLogout, onMenuClick }: HeaderProps) {
           <ChevronDown size={18} />
         </button>
 
+        {/* Profile dropdown */}
         {profileOpen && (
           <ProfileModal
             onOpenProfile={() => {
@@ -74,6 +80,7 @@ export default function Header({ onLogout, onMenuClick }: HeaderProps) {
           />
         )}
 
+        {/* Profile details */}
         {profileCardOpen && (
           <ProfileCard
             profile={profile}
@@ -90,21 +97,29 @@ export default function Header({ onLogout, onMenuClick }: HeaderProps) {
         )}
       </header>
 
+      {/* Edit profile modal */}
       <EditProfileModal
         open={editProfileOpen}
         profile={profile}
         onClose={() => setEditProfileOpen(false)}
-        onSave={(data) => setProfile((prev) => ({ ...prev, ...data }))}
+        onSave={(data) => {
+          setProfile((prev) => ({
+            ...prev,
+            ...data,
+          }));
+        }}
       />
 
+      {/* Change password modal */}
       <ChangePasswordModal
         open={changePasswordOpen}
         onClose={() => setChangePasswordOpen(false)}
         onSave={() => {
-          // In a real app, call your API to update the password here.
+          // API call here
         }}
       />
 
+      {/* Logout modal */}
       <LogoutModal
         open={logoutOpen}
         onClose={() => setLogoutOpen(false)}

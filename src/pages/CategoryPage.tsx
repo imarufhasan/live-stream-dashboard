@@ -423,7 +423,7 @@ export default function CategoryPage() {
                   <p
                     className="
                       mt-0.5
-                      break-words
+                      wrap-break-word
                       text-sm
                       font-medium
                       text-white
