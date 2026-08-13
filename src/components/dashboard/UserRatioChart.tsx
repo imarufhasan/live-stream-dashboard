@@ -22,26 +22,29 @@ export default function UserRatioChart() {
   return (
     <div
       className="
-bg-[#171717]
-border
-border-[#343434]
-rounded-xl
-p-5
-h-[300px]
-"
+        w-full
+        rounded-xl
+        border
+        border-[#343434]
+        bg-[#171717]
+        p-4
+        sm:p-5
+      "
     >
       <h2
         className="
-text-lg
-font-semibold
-mb-5
-"
+          mb-3
+          text-base
+          font-semibold
+          sm:mb-5
+          sm:text-lg
+        "
       >
         Active & Inactive User Ratio
       </h2>
 
-      <div className="h-[190px]">
-        <ResponsiveContainer>
+      <div className="h-[190px] w-full sm:h-[200px]">
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={data}
@@ -58,20 +61,24 @@ mb-5
         </ResponsiveContainer>
       </div>
 
+      {/* Legend */}
       <div
         className="
-flex
-justify-around
-text-sm
-"
+          flex
+          flex-wrap
+          justify-center
+          gap-6
+          text-sm
+          sm:justify-around
+        "
       >
-        <div>
+        <div className="text-center">
           <p className="text-blue-400">● 150</p>
 
           <span className="text-gray-500">Active User</span>
         </div>
 
-        <div>
+        <div className="text-center">
           <p className="text-red-500">● 10</p>
 
           <span className="text-gray-500">Inactive User</span>

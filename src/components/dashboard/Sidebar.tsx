@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { ElementType } from "react";
+import logo from "../../assets/images/logo.png";
 
 type ChildMenu = {
   name: string;
@@ -176,26 +177,27 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
           lg:translate-x-0
         `}
       >
-        {/* Logo + Close Button */}
         <div className="mb-10 flex items-center justify-between">
-          {/* Logo */}
-          <div className="text-2xl font-bold text-white">
-            <span className="text-red-600">◉</span> Pokelive
+          <div className="flex items-center">
+            <img
+              src={logo}
+              alt="Pokelive"
+              className="h-9.5 w-30.25 object-contain"
+            />
           </div>
 
-          {/* Mobile Close Button */}
           <button
             type="button"
             onClick={onClose}
             className="
-              rounded-lg
-              p-1.5
-              text-[#999]
-              transition
-              hover:bg-[#1e1e1e]
-              hover:text-white
-              lg:hidden
-            "
+      rounded-lg
+      p-1.5
+      text-[#999]
+      transition
+      hover:bg-[#1e1e1e]
+      hover:text-white
+      lg:hidden
+    "
             title="Close menu"
             aria-label="Close menu"
           >

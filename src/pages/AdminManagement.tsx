@@ -2,7 +2,9 @@ import { useMemo, useState } from "react";
 import { Search, UserCheck, UserX, Trash2 } from "lucide-react";
 
 import { admins as initialAdmins } from "../data/admin";
+
 import type { Admin } from "../data/admin";
+
 import AddAdminModal from "../components/admin/AddAdminModal";
 import Pagination from "../components/common/Pagination";
 
@@ -10,63 +12,158 @@ const PER_PAGE = 5;
 
 export default function AdminManagement() {
   const [admins, setAdmins] = useState<Admin[]>(initialAdmins);
+
   const [search, setSearch] = useState("");
+
   const [page, setPage] = useState(1);
+
   const [modalOpen, setModalOpen] = useState(false);
 
-  const filtered = useMemo(
-    () =>
-      admins.filter(
-        (a) =>
-          a.name.toLowerCase().includes(search.toLowerCase()) ||
-          a.email.toLowerCase().includes(search.toLowerCase())
-      ),
-    [admins, search]
-  );
+  /* ========================================
+     Search
+  ======================================== */
+
+  const filtered = useMemo(() => {
+    const keyword = search.toLowerCase().trim();
+
+    return admins.filter(
+      (admin) =>
+        admin.name.toLowerCase().includes(keyword) ||
+        admin.email.toLowerCase().includes(keyword),
+    );
+  }, [admins, search]);
+
+  /* ========================================
+     Pagination
+  ======================================== */
+
+  //const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
 
   const rows = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
+  /* ========================================
+     Toggle Block
+  ======================================== */
+
   const handleToggleBlock = (id: number) => {
     setAdmins((prev) =>
-      prev.map((a) =>
-        a.id === id
-          ? { ...a, status: a.status === "Active" ? "Blocked" : "Active" }
-          : a
-      )
+      prev.map((admin) =>
+        admin.id === id
+          ? {
+              ...admin,
+              status: admin.status === "Active" ? "Blocked" : "Active",
+            }
+          : admin,
+      ),
     );
   };
 
+  /* ========================================
+     Delete
+  ======================================== */
+
   const handleDelete = (id: number) => {
-    setAdmins((prev) => prev.filter((a) => a.id !== id));
+    setAdmins((prev) => prev.filter((admin) => admin.id !== id));
+
+    // Prevent empty page after delete
+    setPage((currentPage) => {
+      const remainingItems = filtered.length - 1;
+
+      const newTotalPages = Math.max(1, Math.ceil(remainingItems / PER_PAGE));
+
+      return Math.min(currentPage, newTotalPages);
+    });
   };
 
-  const handleAdd = (data: { name: string; email: string; password: string }) => {
+  /* ========================================
+     Add Admin
+  ======================================== */
+
+  const handleAdd = (data: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
     setAdmins((prev) => [
       ...prev,
       {
-        id: Math.max(0, ...prev.map((a) => a.id)) + 1,
+        id: Math.max(0, ...prev.map((admin) => admin.id)) + 1,
+
         name: data.name,
+
         email: data.email,
+
         status: "Active",
+
         avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(
-          data.name
+          data.name,
         )}&background=333333&color=fff&size=64`,
       },
     ]);
+
+    setPage(1);
   };
 
   return (
-    <div className="min-h-screen bg-black p-5 text-white">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-semibold">Make Admin</h1>
+    <div className="w-full min-w-0 text-white">
+      {/* ========================================
+          Header
+      ======================================== */}
 
-        <div className="flex items-center gap-3">
-          <div className="relative">
+      <div
+        className="
+          flex
+          flex-col
+          gap-4
+          sm:flex-row
+          sm:items-center
+          sm:justify-between
+        "
+      >
+        {/* Title */}
+        <h1
+          className="
+            text-xl
+            font-semibold
+            sm:text-2xl
+          "
+        >
+          Make Admin
+        </h1>
+
+        {/* Search + Add */}
+        <div
+          className="
+            flex
+            w-full
+            flex-col
+            gap-3
+            sm:w-auto
+            sm:flex-row
+            sm:items-center
+          "
+        >
+          {/* Search */}
+          <div
+            className="
+              relative
+              w-full
+              sm:w-56
+              md:w-64
+            "
+          >
             <Search
               size={16}
-              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+              className="
+                pointer-events-none
+                absolute
+                left-4
+                top-1/2
+                -translate-y-1/2
+                text-gray-500
+              "
             />
+
             <input
               value={search}
               onChange={(e) => {
@@ -74,68 +171,180 @@ export default function AdminManagement() {
                 setPage(1);
               }}
               placeholder="Search..."
-              className="w-56 rounded-full border border-[#444] bg-[#1a1a1a] py-2.5 pl-10 pr-4 text-sm text-white placeholder-gray-500 outline-none focus:border-red-700"
+              className="
+                w-full
+                rounded-full
+                border
+                border-[#444]
+                bg-[#1a1a1a]
+                py-2.5
+                pl-10
+                pr-4
+                text-sm
+                text-white
+                placeholder-gray-500
+                outline-none
+                transition
+                focus:border-red-700
+              "
             />
           </div>
 
+          {/* Add Admin */}
           <button
+            type="button"
             onClick={() => setModalOpen(true)}
-            className="whitespace-nowrap rounded-full bg-red-900 px-5 py-2.5 text-sm font-semibold transition hover:bg-red-800"
+            className="
+              w-full
+              whitespace-nowrap
+              rounded-full
+              bg-red-900
+              px-5
+              py-2.5
+              text-sm
+              font-semibold
+              transition
+              hover:bg-red-800
+              sm:w-auto
+            "
           >
-            +Add New Admin
+            + Add New Admin
           </button>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="mt-5 overflow-hidden rounded-xl border border-[#333]">
+      {/* ========================================
+          Desktop Table
+      ======================================== */}
+
+      <div
+        className="
+          mt-5
+          hidden
+          overflow-hidden
+          rounded-xl
+          border
+          border-[#333]
+          lg:block
+        "
+      >
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-[#2a2a2a] text-gray-300">
               <th className="p-3 text-left font-medium">Name</th>
+
               <th className="p-3 text-left font-medium">Email</th>
+
               <th className="p-3 text-right font-medium">Action</th>
             </tr>
           </thead>
+
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={3} className="p-6 text-center text-gray-500">
+                <td
+                  colSpan={3}
+                  className="
+                    p-10
+                    text-center
+                    text-gray-500
+                  "
+                >
                   No admins found.
                 </td>
               </tr>
             ) : (
-              rows.map((a) => (
-                <tr key={a.id} className="border-t border-[#2a2a2a]">
+              rows.map((admin) => (
+                <tr
+                  key={admin.id}
+                  className="
+                    border-t
+                    border-[#2a2a2a]
+                    transition
+                    hover:bg-[#1b1b1b]
+                  "
+                >
+                  {/* Name */}
                   <td className="p-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-300">{a.name}</span>
-                      {a.status === "Blocked" && (
-                        <span className="rounded bg-red-900/40 px-2 py-0.5 text-[10px] font-semibold text-red-400">
+                    <div
+                      className="
+                        flex
+                        items-center
+                        gap-2
+                      "
+                    >
+                      <span className="text-gray-300">{admin.name}</span>
+
+                      {admin.status === "Blocked" && (
+                        <span
+                          className="
+                            rounded
+                            bg-red-900/40
+                            px-2
+                            py-0.5
+                            text-[10px]
+                            font-semibold
+                            text-red-400
+                          "
+                        >
                           Blocked
                         </span>
                       )}
                     </div>
                   </td>
-                  <td className="p-3 text-gray-300">{a.email}</td>
+
+                  {/* Email */}
+                  <td className="p-3 text-gray-300">{admin.email}</td>
+
+                  {/* Action */}
                   <td className="p-3">
-                    <div className="flex items-center justify-end gap-3">
+                    <div
+                      className="
+                        flex
+                        items-center
+                        justify-end
+                        gap-3
+                      "
+                    >
+                      {/* Block / Unblock */}
                       <button
-                        onClick={() => handleToggleBlock(a.id)}
-                        className={`rounded-full p-1.5 hover:bg-[#222] ${
-                          a.status === "Active" ? "text-green-500" : "text-gray-500"
-                        }`}
-                        title={a.status === "Active" ? "Block admin" : "Unblock admin"}
+                        type="button"
+                        onClick={() => handleToggleBlock(admin.id)}
+                        className={`
+                          rounded-full
+                          p-1.5
+                          transition
+                          hover:bg-[#222]
+                          ${
+                            admin.status === "Active"
+                              ? "text-green-500"
+                              : "text-gray-500"
+                          }
+                        `}
+                        title={
+                          admin.status === "Active"
+                            ? "Block admin"
+                            : "Unblock admin"
+                        }
                       >
-                        {a.status === "Active" ? (
+                        {admin.status === "Active" ? (
                           <UserCheck size={16} />
                         ) : (
                           <UserX size={16} />
                         )}
                       </button>
+
+                      {/* Delete */}
                       <button
-                        onClick={() => handleDelete(a.id)}
-                        className="rounded-full p-1.5 text-red-500 hover:bg-red-950/40"
+                        type="button"
+                        onClick={() => handleDelete(admin.id)}
+                        className="
+                          rounded-full
+                          p-1.5
+                          text-red-500
+                          transition
+                          hover:bg-red-950/40
+                        "
                         title="Delete admin"
                       >
                         <Trash2 size={16} />
@@ -149,12 +358,176 @@ export default function AdminManagement() {
         </table>
       </div>
 
-      <Pagination
-        page={page}
-        totalItems={filtered.length}
-        perPage={PER_PAGE}
-        onPageChange={setPage}
-      />
+      {/* ========================================
+          Mobile / Tablet Cards
+      ======================================== */}
+
+      <div
+        className="
+          mt-5
+          space-y-3
+          lg:hidden
+        "
+      >
+        {rows.length === 0 ? (
+          <div
+            className="
+              rounded-xl
+              border
+              border-[#333]
+              bg-[#171717]
+              px-4
+              py-12
+              text-center
+              text-sm
+              text-gray-500
+            "
+          >
+            No admins found.
+          </div>
+        ) : (
+          rows.map((admin) => (
+            <div
+              key={admin.id}
+              className="
+                flex
+                min-w-0
+                items-center
+                justify-between
+                gap-4
+                rounded-xl
+                border
+                border-[#333]
+                bg-[#171717]
+                p-4
+              "
+            >
+              {/* Admin Info */}
+              <div className="min-w-0">
+                <div
+                  className="
+                    flex
+                    flex-wrap
+                    items-center
+                    gap-2
+                  "
+                >
+                  <p
+                    className="
+                      break-words
+                      text-sm
+                      font-medium
+                      text-white
+                    "
+                  >
+                    {admin.name}
+                  </p>
+
+                  {admin.status === "Blocked" && (
+                    <span
+                      className="
+                        rounded
+                        bg-red-900/40
+                        px-2
+                        py-0.5
+                        text-[10px]
+                        font-semibold
+                        text-red-400
+                      "
+                    >
+                      Blocked
+                    </span>
+                  )}
+                </div>
+
+                <p
+                  className="
+                    mt-1
+                    break-all
+                    text-xs
+                    text-gray-500
+                  "
+                >
+                  {admin.email}
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div
+                className="
+                  flex
+                  shrink-0
+                  items-center
+                  gap-1
+                "
+              >
+                {/* Block / Unblock */}
+                <button
+                  type="button"
+                  onClick={() => handleToggleBlock(admin.id)}
+                  className={`
+                    rounded-full
+                    p-2
+                    transition
+                    hover:bg-[#292929]
+                    ${
+                      admin.status === "Active"
+                        ? "text-green-500"
+                        : "text-gray-500"
+                    }
+                  `}
+                  title={
+                    admin.status === "Active" ? "Block admin" : "Unblock admin"
+                  }
+                  aria-label={
+                    admin.status === "Active" ? "Block admin" : "Unblock admin"
+                  }
+                >
+                  {admin.status === "Active" ? (
+                    <UserCheck size={17} />
+                  ) : (
+                    <UserX size={17} />
+                  )}
+                </button>
+
+                {/* Delete */}
+                <button
+                  type="button"
+                  onClick={() => handleDelete(admin.id)}
+                  className="
+                    rounded-full
+                    p-2
+                    text-red-500
+                    transition
+                    hover:bg-red-950/40
+                  "
+                  title="Delete admin"
+                  aria-label="Delete admin"
+                >
+                  <Trash2 size={17} />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* ========================================
+          Pagination
+      ======================================== */}
+
+      {filtered.length > 0 && (
+        <Pagination
+          page={page}
+          totalItems={filtered.length}
+          perPage={PER_PAGE}
+          onPageChange={setPage}
+        />
+      )}
+
+      {/* ========================================
+          Add Admin Modal
+      ======================================== */}
 
       <AddAdminModal
         open={modalOpen}
