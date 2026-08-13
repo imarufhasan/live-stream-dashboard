@@ -487,23 +487,17 @@ export default function CategoryPage() {
           Pagination
       ======================================== */}
 
+      {/* Pagination */}
       {filtered.length > 0 && (
-        <div
-          className="
-            mt-4
-            overflow-hidden
-            rounded-xl
-            border
-            border-[#333]
-            bg-[#171717]
-          "
-        >
-          <Pagination
-            page={page}
-            totalItems={filtered.length}
-            perPage={PER_PAGE}
-            onPageChange={setPage}
-          />
+        <div className="mt-4 overflow-x-auto rounded-xl px-2 pb-4 border border-[#333] bg-[#171717]">
+          <div className="min-w-max">
+            <Pagination
+              page={page}
+              totalItems={filtered.length}
+              perPage={PER_PAGE}
+              onPageChange={setPage}
+            />
+          </div>
         </div>
       )}
 
